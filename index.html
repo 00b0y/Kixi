@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestão de Processos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root { --cor-primaria:#004d40; --cor-secundaria:#ff9800; --cor-fundo:#f4f4f4; }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            background: var(--cor-fundo);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: var(--cor-primaria);
+            border-bottom: 4px solid var(--cor-secundaria);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        label {
+            font-weight: bold;
+            color: var(--cor-primaria);
+            margin-right: 6px;
+        }
+        select, input {
+            padding: 6px;
+            margin: 6px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            background: var(--cor-primaria);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 4px;
+            white-space: nowrap; 
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .pagination {
+            margin-top: 10px;
+            text-align: right;
+        }
+        #filtroNome {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 700px;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: left;
+            max-width: 150px;
+            overflow: hidden; 
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        th {
+            background: var(--cor-primaria);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Gestão de Processos</h1>
+
+    <div class="row">
+        <label>Produto:</label>
+        <select id="filtroProduto">
+            <option value="">Todos</option>
+        </select>
+
+        <label>Loan (Prefixo):</label>
+        <select id="filtroLoanPrefixo">
+            <option value="">Todos</option>
+        </select>
+
+        <label>Estado:</label>
+        <select id="filtroEstado">
+            <option value="">Todos</option>
+        </select>
+
+        <input type="text" id="filtroNome" placeholder="Buscar Apenas Nome..." />
+    </div>
+    
+    <div style="margin-bottom: 20px; text-align: right;">
+        <button id="btnLimparCache" class="btn" style="background:#004d40;">Atualizar Status/Cache</button>
+        <button id="btnLimparFiltro" class="btn" style="background:#ff9800;">Limpar Filtros</button>
+        <span id="cacheFeedback" style="color: green; margin-left: 10px;"></span>
+    </div>
+
+    <div class="table-wrapper">
+        <table id="tabela">
+            <thead>
+                <tr>
+                    <th>Loan Number</th>
+                    <th>Produto</th>
+                    <th>Nome</th>
+                    <th>Estado</th>
+                    <th>Data</th>
+                    <th>Obs.</th>
+                    <th>Ação/Status</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="pagination">
+        <button id="prevPage" class="btn">Anterior</button>
+        <span id="pageInfo"></span>
+        <button id="nextPage" class="btn">Próximo</button>
+    </div>
+</div>
+
+<script>
+    const API_URL = '1j0GD__nUwT8FyXEAZ0sXl1QHJYxCxzlKKr4dR8y5bZHFmIwIRJf0kWmy'; // Substitua pela sua URL
+    let documentos = [];
+    let currentPage = 1;
+    const rowsPerPage = 20;
+
+    document.getElementById('btnLimparFiltro').addEventListener('click', function() {
+        // Resetar os valores dos filtros
+        document.getElementById('filtroProduto').value = "";
+        document.getElementById('filtroLoanPrefixo').value = "";
+        document.getElementById('filtroEstado').value = "";
+        document.getElementById('filtroNome').value = "";
+
+        // Atualizar a tabela
+        carregarTabela(documentos); // Supondo que já tenha uma função carregarTabela
+    });
+
+    function carregarTabela(data) {
+        const tabela = document.getElementById('tabela').getElementsByTagName('tbody')[0];
+        tabela.innerHTML = ""; // Limpar tabela
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const paginatedData = data.slice(startIndex, startIndex + rowsPerPage);
+
+        paginatedData.forEach(row => {
+            const newRow = tabela.insertRow();
+            Object.keys(row).forEach(key => {
+                const newCell = newRow.insertCell();
+                newCell.textContent = row[key];
+            });
+        });
+
+        document.getElementById('pageInfo').textContent = `Página ${currentPage}`;
+    }
+</script>
+</body>
+</html>
