@@ -88,6 +88,7 @@
             text-align: center;
             overflow: visible; 
             text-overflow: clip; 
+            white-space: nowrap;
         }
         
         .btn {
@@ -104,6 +105,17 @@
             background: #ccc;
             cursor: not-allowed;
         }
+        /* NOVO ESTILO PARA O BOTÃO LIMPAR FILTRO (Opicional) */
+        .btn-limpar {
+            background: #f0f0f0;
+            color: var(--cor-primaria);
+            border: 1px solid var(--cor-primaria);
+        }
+        .btn-limpar:hover {
+            background: #e0e0e0;
+        }
+        /* FIM NOVO ESTILO */
+
         .pagination {
             margin-top: 10px;
             text-align: right;
@@ -113,7 +125,7 @@
             min-width: 200px;
         }
 
-        /* Tooltip (Balão de Observação) */
+        /* Tooltip (Balão de Observação) - Sem Alteração */
         .observacao-tooltip {
             position: relative; 
             display: block; 
@@ -151,7 +163,7 @@
             opacity: 1;
         }
         
-        /* Estilos do Modal */
+        /* Estilos do Modal - Sem Alteração */
         .modal {
             display: none; 
             position: fixed; 
@@ -200,15 +212,9 @@
             padding: 8px;
             box-sizing: border-box;
         }
-        /* Cores dos Botões no Layout Original */
+        /* Cores dos Botões no Layout Original - Sem Alteração */
         .btn-reenviar { background: #ff9800 !important; }
         .btn-fechado { background: #f44336 !important; cursor: not-allowed; }
-        /* Estilo para o botão Limpar Filtro */
-        .btn-limpar-filtro {
-            background: #757575 !important; /* Cor cinza para reset */
-            margin-left: 10px;
-            padding: 6px 12px;
-        }
     </style>
 </head>
 <body>
@@ -227,7 +233,7 @@
 
         <input type="text" id="filtroNome" placeholder="Buscar Apenas Nome..." />
         
-                <button id="btnLimparFiltro" class="btn btn-limpar-filtro">Limpar Filtros</button>
+                <button id="btnLimparFiltros" class="btn btn-limpar">Limpar Filtros</button>
     </div>
     
     <div style="margin-bottom: 20px; text-align: right;">
@@ -394,21 +400,16 @@
             fecharModal();
         }
     }
-    
-    /**
-     * NOVA FUNÇÃO: Limpa todos os campos de filtro e recarrega a tabela.
-     */
-    function limparFiltros() {
-        document.getElementById('filtroProduto').value = '';
-        document.getElementById('filtroLoanPrefixo').value = '';
-        document.getElementById('filtroEstado').value = '';
-        document.getElementById('filtroNome').value = '';
-        
-        // Volta para a primeira página e recarrega a tabela com os filtros limpos
-        currentPage = 1;
-        carregarTabela();
-    }
 
+    // NOVO: Função para limpar todos os filtros
+    function limparFiltros() {
+        document.getElementById('filtroProduto').value = "";
+        document.getElementById('filtroLoanPrefixo').value = "";
+        document.getElementById('filtroEstado').value = "";
+        document.getElementById('filtroNome').value = "";
+        currentPage = 1; // Reinicia para a primeira página
+        carregarTabela(); // Recarrega a tabela com filtros vazios
+    }
 
     // ===============================================
     // FUNÇÕES DE COMUNICAÇÃO (FETCH API)
@@ -668,9 +669,9 @@
     document.getElementById('filtroLoanPrefixo').onchange = () => { currentPage=1; carregarTabela(); };
     document.getElementById('filtroEstado').onchange = () => { currentPage=1; carregarTabela(); };
     document.getElementById('filtroNome').oninput = () => { currentPage=1; carregarTabela(); }; 
-    
-    // NOVO EVENTO ONCLICK PARA LIMPAR FILTROS
-    document.getElementById('btnLimparFiltro').onclick = limparFiltros;
+    
+    // NOVO: Evento para o botão de limpar filtros
+    document.getElementById('btnLimparFiltros').onclick = limparFiltros;
 
 
     // Carregar dados ao iniciar
