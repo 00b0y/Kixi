@@ -55,7 +55,7 @@
             border-radius: 6px;
             cursor: pointer;
             margin: 0 4px;
-            white-space: nowrap; 
+            white-space: nowrap;
         }
         .btn:disabled {
             background: #ccc;
@@ -150,11 +150,12 @@
 </div>
 
 <script>
-    const API_URL = '1j0GD__nUwT8FyXEAZ0sXl1QHJYxCxzlKKr4dR8y5bZHFmIwIRJf0kWmy'; // Substitua pela sua URL
+    const API_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_URL/exec'; // Substitua pela sua URL
     let documentos = [];
     let currentPage = 1;
     const rowsPerPage = 20;
 
+    // Listener para botão "Limpar Filtro"
     document.getElementById('btnLimparFiltro').addEventListener('click', function() {
         // Resetar os valores dos filtros
         document.getElementById('filtroProduto').value = "";
@@ -166,6 +167,24 @@
         carregarTabela(documentos); // Supondo que já tenha uma função carregarTabela
     });
 
+    // Listener para botão de atualizar cache
+    document.getElementById('btnLimparCache').addEventListener('click', function() {
+        fetch(`${API_URL}`, { method: 'POST', body: JSON.stringify({ action: 'limparCache' }), headers: { 'Content-Type': 'application/json' } })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('cacheFeedback').textContent = 'Cache atualizado com sucesso!';
+                } else {
+                    document.getElementById('cacheFeedback').textContent = 'Erro ao atualizar cache.';
+                }
+            })
+            .catch(error => {
+                document.getElementById('cacheFeedback').textContent = 'Erro de rede ao atualizar cache.';
+                console.error('Erro:', error);
+            });
+    });
+
+    // Função para carregar a tabela com dados
     function carregarTabela(data) {
         const tabela = document.getElementById('tabela').getElementsByTagName('tbody')[0];
         tabela.innerHTML = ""; // Limpar tabela
@@ -182,6 +201,22 @@
 
         document.getElementById('pageInfo').textContent = `Página ${currentPage}`;
     }
+
+    // Função para navegar entre páginas
+    document.getElementById('prevPage').addEventListener('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            carregarTabela(documentos);
+        }
+    });
+
+    document.getElementById('nextPage').addEventListener('click', function() {
+        const totalPages = Math.ceil(documentos.length / rowsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            carregarTabela(documentos);
+        }
+    });
 </script>
 </body>
 </html>
