@@ -1,683 +1,684 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Gestão de Processos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        /* ==================================== */
-        /* CSS: Estilos e regras de corte (Original) */
-        /* ==================================== */
-        :root { --cor-primaria:#004d40; --cor-secundaria:#ff9800; --cor-fundo:#f4f4f4; }
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            background: var(--cor-fundo);
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 30px;
-            background: #fff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-            border-radius: 10px;
-        }
-        h1 {
-            text-align: center;
-            color: var(--cor-primaria);
-            border-bottom: 4px solid var(--cor-secundaria);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-weight: 800;
-        }
-        label {
-            font-weight: bold;
-            color: var(--cor-primaria);
-            margin-right: 6px;
-        }
-        select, input {
-            padding: 6px;
-            margin: 6px 0;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+    <title>Gestão de Processos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* ==================================== */
+        /* CSS: Estilos e regras de corte (Original) */
+        /* ==================================== */
+        :root { --cor-primaria:#004d40; --cor-secundaria:#ff9800; --cor-fundo:#f4f4f4; }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            background: var(--cor-fundo);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: var(--cor-primaria);
+            border-bottom: 4px solid var(--cor-secundaria);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        label {
+            font-weight: bold;
+            color: var(--cor-primaria);
+            margin-right: 6px;
+        }
+        select, input {
+            padding: 6px;
+            margin: 6px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
 
-        /* Tabela */
-        .table-wrapper {
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            min-width: 700px;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-        }
-        th, td {
-            padding: 8px;
-            border: 1px solid #ccc;
-            text-align: left;
-            max-width: 150px;
-            overflow: hidden; 
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        th {
-            background: var(--cor-primaria);
-            color: white;
-        }
-        
-        .linha-ativa {
-            background-color: #e0f2f1 !important; 
-            transition: background-color 0.3s;
-        }
-        
-        /* Célula de Observação */
-        #tabela td:nth-child(6) { 
-            position: relative; 
-            max-width: 50px;
-            text-align: center;
-            overflow: visible; 
-            text-overflow: clip; 
-            white-space: nowrap;
-        }
-        
-        .btn {
-            padding: 6px 12px;
-            background: var(--cor-primaria);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin: 0 4px;
-            white-space: nowrap; 
-        }
-        .btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        /* NOVO ESTILO PARA O BOTÃO LIMPAR FILTRO (Opicional) */
-        .btn-limpar {
-            background: #f0f0f0;
-            color: var(--cor-primaria);
-            border: 1px solid var(--cor-primaria);
-        }
-        .btn-limpar:hover {
-            background: #e0e0e0;
-        }
-        /* FIM NOVO ESTILO */
+        /* Tabela */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 700px;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: left;
+            max-width: 150px;
+            overflow: hidden; 
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        th {
+            background: var(--cor-primaria);
+            color: white;
+        }
+        
+        .linha-ativa {
+            background-color: #e0f2f1 !important; 
+            transition: background-color 0.3s;
+        }
+        
+        /* Célula de Observação */
+        #tabela td:nth-child(6) { 
+            position: relative; 
+            max-width: 50px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: visible; 
+            text-overflow: clip; 
+        }
+        
+        .btn {
+            padding: 6px 12px;
+            background: var(--cor-primaria);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 4px;
+            white-space: nowrap; 
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .pagination {
+            margin-top: 10px;
+            text-align: right;
+        }
+        #filtroNome {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        /* NOVO ESTILO: Botão de limpar filtro (para se destacar ou alinhar) */
+        .btn-limpar {
+            background: #757575; /* Cinza suave */
+            margin-left: auto; /* Empurra para a direita se houver espaço (em flex container) */
+            order: 10; /* Garante que fique no final da linha (se for um item flex) */
+        }
+        /* Ajuste para o botão, para que fique alinhado na linha de filtros */
+        .row button {
+            align-self: center;
+            margin: 6px 0; /* Alinha verticalmente com inputs */
+        }
 
-        .pagination {
-            margin-top: 10px;
-            text-align: right;
-        }
-        #filtroNome {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        /* Tooltip (Balão de Observação) - Sem Alteração */
-        .observacao-tooltip {
-            position: relative; 
-            display: block; 
-            cursor: pointer;
-            color: #ff9800 !important; 
-            font-weight: bold;
-            margin: auto; 
-            width: fit-content;
-        }
-        .tooltiptext {
-            visibility: hidden; 
-            opacity: 0;
-            width: 350px !important; 
-            max-height: 150px; 
-            overflow-y: auto; 
-            background-color: #333 !important; 
-            color: #fff !important; 
-            text-align: left;
-            border-radius: 6px;
-            padding: 10px !important; 
-            font-size: 12px !important; 
-            position: absolute;
-            z-index: 100 !important; 
-            bottom: 100% !important; 
-            top: auto; 
-            right: 0; 
-            left: auto; 
-            transform: none; 
-            transition: opacity 0.3s, visibility 0.3s;
-            white-space: normal; 
-            word-wrap: break-word; 
-        }
-        .tooltiptext.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        /* Estilos do Modal - Sem Alteração */
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1000; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgba(0,0,0,0.4); 
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto; 
-            padding: 25px;
-            border: 1px solid #888;
-            width: 80%; 
-            max-width: 500px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        .close-btn {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close-btn:hover, .close-btn:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .modal h2 {
-            color: var(--cor-primaria);
-            margin-top: 0;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input[type="text"], .form-group input[type="file"], .form-group select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        /* Cores dos Botões no Layout Original - Sem Alteração */
-        .btn-reenviar { background: #ff9800 !important; }
-        .btn-fechado { background: #f44336 !important; cursor: not-allowed; }
-    </style>
+        /* Tooltip (Balão de Observação) (Restante do seu CSS original) */
+        .observacao-tooltip {
+            position: relative; 
+            display: block; 
+            cursor: pointer;
+            color: #ff9800 !important; 
+            font-weight: bold;
+            margin: auto; 
+            width: fit-content;
+        }
+        .tooltiptext {
+            visibility: hidden; 
+            opacity: 0;
+            width: 350px !important; 
+            max-height: 150px; 
+            overflow-y: auto; 
+            background-color: #333 !important; 
+            color: #fff !important; 
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px !important; 
+            font-size: 12px !important; 
+            position: absolute;
+            z-index: 100 !important; 
+            bottom: 100% !important; 
+            top: auto; 
+            right: 0; 
+            left: auto; 
+            transform: none; 
+            transition: opacity 0.3s, visibility 0.3s;
+            white-space: normal; 
+            word-wrap: break-word; 
+        }
+        .tooltiptext.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Estilos do Modal (Restante do seu CSS original) */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); 
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; 
+            padding: 25px;
+            border: 1px solid #888;
+            width: 80%; 
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-btn:hover, .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal h2 {
+            color: var(--cor-primaria);
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"], .form-group input[type="file"], .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        /* Cores dos Botões no Layout Original */
+        .btn-reenviar { background: #ff9800 !important; }
+        .btn-fechado { background: #f44336 !important; cursor: not-allowed; }
+    </style>
 </head>
 <body>
 <div class="container">
-    <h1>Gestão de Processos</h1>
+    <h1>Gestão de Processos</h1>
 
-    <div class="row">
-        <label>Produto:</label>
-        <select id="filtroProduto"><option value="">Todos</option></select>
+    <div class="row">
+        <label for="filtroProduto">Produto:</label>
+        <select id="filtroProduto"><option value="">Todos</option></select>
 
-        <label>Loan (Prefixo):</label>
-        <select id="filtroLoanPrefixo"><option value="">Todos</option></select>
+        <label for="filtroLoanPrefixo">Loan (Prefixo):</label>
+        <select id="filtroLoanPrefixo"><option value="">Todos</option></select>
 
-        <label>Estado:</label>
-        <select id="filtroEstado"><option value="">Todos</option></select>
+        <label for="filtroEstado">Estado:</label>
+        <select id="filtroEstado"><option value="">Todos</option></select>
 
-        <input type="text" id="filtroNome" placeholder="Buscar Apenas Nome..." />
-        
-                <button id="btnLimparFiltros" class="btn btn-limpar">Limpar Filtros</button>
-    </div>
-    
-    <div style="margin-bottom: 20px; text-align: right;">
-        <button id="btnLimparCache" class="btn" style="background:#004d40;">Atualizar Status/Cache</button>
-        <span id="cacheFeedback" style="color: green; margin-left: 10px;"></span>
-    </div>
+        <input type="text" id="filtroNome" placeholder="Buscar Apenas Nome..." />
+        
+        <button id="btnLimparFiltro" class="btn btn-limpar">Limpar Filtro</button>
+    </div>
+    
+    <div style="margin-bottom: 20px; text-align: right;">
+        <button id="btnLimparCache" class="btn" style="background:#004d40;">Atualizar Status/Cache</button>
+        <span id="cacheFeedback" style="color: green; margin-left: 10px;"></span>
+    </div>
 
-    <div class="table-wrapper">
-        <table id="tabela">
-            <thead>
-                <tr>
-                    <th>Loan Number</th>
-                    <th>Produto</th>
-                    <th>Nome</th>
-                    <th>Estado</th>
-                    <th>Data</th>
-                    <th>Obs.</th>
-                    <th>Ação/Status</th> </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
+    <div class="table-wrapper">
+        <table id="tabela">
+            <thead>
+                <tr>
+                    <th>Loan Number</th>
+                    <th>Produto</th>
+                    <th>Nome</th>
+                    <th>Estado</th>
+                    <th>Data</th>
+                    <th>Obs.</th>
+                    <th>Ação/Status</th> </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-    <div class="pagination">
-        <button id="prevPage" class="btn">Anterior</button>
-        <span id="pageInfo"></span>
-        <button id="nextPage" class="btn">Próximo</button>
-    </div>
+    <div class="pagination">
+        <button id="prevPage" class="btn">Anterior</button>
+        <span id="pageInfo"></span>
+        <button id="nextPage" class="btn">Próximo</button>
+    </div>
 </div>
 
 <div id="correcaoModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="fecharModal()">&times;</span>
-        <h2>Enviar Correção</h2>
-        
-        <form id="correcaoForm">
-            <div class="form-group">
-                <label>Loan Number:</label>
-                <input type="text" id="modalLoan" name="loan" readonly>
-            </div>
-            <div class="form-group">
-                <label>Nome:</label>
-                <input type="text" id="modalNome" name="nome" readonly>
-            </div>
-            
-            <input type="hidden" id="modalEstadoOriginal" name="estadoOriginal">
-            <input type="hidden" type="date" id="modalDataOriginal" name="dataOriginal">
-            <input type="hidden" id="modalObservacao" name="observacao">
+    <div class="modal-content">
+        <span class="close-btn" onclick="fecharModal()">&times;</span>
+        <h2>Enviar Correção</h2>
+        
+        <form id="correcaoForm">
+            <div class="form-group">
+                <label>Loan Number:</label>
+                <input type="text" id="modalLoan" name="loan" readonly>
+            </div>
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" id="modalNome" name="nome" readonly>
+            </div>
+            
+            <input type="hidden" id="modalEstadoOriginal" name="estadoOriginal">
+            <input type="hidden" type="date" id="modalDataOriginal" name="dataOriginal">
+            <input type="hidden" id="modalObservacao" name="observacao">
 
-            <div class="form-group">
-                <label for="modalAcao">Status de Envio:</label>
-                <input type="text" id="modalAcao" name="acao" readonly style="background-color: #eee; font-weight: bold;">
-            </div>
+            <div class="form-group">
+                <label for="modalAcao">Status de Envio:</label>
+                <input type="text" id="modalAcao" name="acao" readonly style="background-color: #eee; font-weight: bold;">
+            </div>
 
-            <div class="form-group">
-                <label for="modalFile">Selecione o Arquivo de Correção (PDF / Excel):</label>
-                <input type="file" id="modalFile" name="file" accept=".pdf,.xls,.xlsx" required>
-            </div>
-            
-            <button type="submit" class="btn" id="btnSubmitForm">Enviar Correção</button>
-            <p id="feedbackMessage" style="margin-top: 15px;"></p>
-        </form>
-    </div>
+            <div class="form-group">
+                <label for="modalFile">Selecione o Arquivo de Correção (PDF / Excel):</label>
+                <input type="file" id="modalFile" name="file" accept=".pdf,.xls,.xlsx" required>
+            </div>
+            
+            <button type="submit" class="btn" id="btnSubmitForm">Enviar Correção</button>
+            <p id="feedbackMessage" style="margin-top: 15px;"></p>
+        </form>
+    </div>
 </div>
 
 <script>
-    // =========================================================
-    // CONFIGURAÇÕES DA API (CRUCIAL)
-    // =========================================================
-    // !!! SUA URL DE IMPLEMENTAÇÃO INSERIDA ABAIXO !!!
-    const API_URL = 'https://script.google.com/macros/s/AKfycbwJ1kzE8y96eLGK9Cdsu5bagsfCyWqrBKa48BC-Ob_0R5CNfUgiHc4nSyjw4QE8UAM/exec'; 
-    
-    // VARIÁVEIS GLOBAIS
-    let documentos = [];
-    let statusCorrecao = {}; 
-    let currentPage = 1;
-    const rowsPerPage = 20;
+    // =========================================================
+    // CONFIGURAÇÕES DA API (CRUCIAL)
+    // =========================================================
+    // !!! SUA URL DE IMPLEMENTAÇÃO INSERIDA ABAIXO !!!
+    const API_URL = 'https://script.google.com/macros/s/AKfycbwJ1kzE8y96eLGK9Cdsu5bagsfCyWqrBKa48BC-Ob_0R5CNfUgiHc4nSyjw4QE8UAM/exec'; 
+    
+    // VARIÁVEIS GLOBAIS
+    let documentos = [];
+    let statusCorrecao = {}; 
+    let currentPage = 1;
+    const rowsPerPage = 20;
 
-    const ESTADOS_PERMITIDOS = ['Falta de Extrato', 'Pendente por Correcção']; 
-    let documentoSelecionado = null; 
+    const ESTADOS_PERMITIDOS = ['Falta de Extrato', 'Pendente por Correcção']; 
+    let documentoSelecionado = null; 
 
-    // ===============================================
-    // FUNÇÕES DE UTILIDADE E INTERFACE
-    // ===============================================
+    // ===============================================
+    // FUNÇÕES DE UTILIDADE E INTERFACE
+    // ===============================================
 
-    function escapeHtml(unsafe) {
-        if (!unsafe) return '';
-        return unsafe.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-    }
+    function escapeHtml(unsafe) {
+        if (!unsafe) return '';
+        return unsafe.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
 
-    function getLoanPrefix(loanNumber) {
-        if (!loanNumber || typeof loanNumber !== 'string') return '';
-        const parts = loanNumber.split('/');
-        return parts.length > 0 ? parts[0] : '';
-    }
+    function getLoanPrefix(loanNumber) {
+        if (!loanNumber || typeof loanNumber !== 'string') return '';
+        const parts = loanNumber.split('/');
+        return parts.length > 0 ? parts[0] : '';
+    }
 
-    function formatarData(dataStr){
-        let d = new Date(dataStr);
-        if(isNaN(d)) return dataStr;
-        return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
-    }
+    function formatarData(dataStr){
+        let d = new Date(dataStr);
+        if(isNaN(d)) return dataStr;
+        return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+    }
 
-    function limparAtivas() {
-        document.querySelectorAll('.linha-ativa').forEach(row => {
-            row.classList.remove('linha-ativa');
-        });
-        document.querySelectorAll('.tooltiptext.active').forEach(tip => {
-            tip.classList.remove('active');
-        });
-    }
+    function limparAtivas() {
+        document.querySelectorAll('.linha-ativa').forEach(row => {
+            row.classList.remove('linha-ativa');
+        });
+        document.querySelectorAll('.tooltiptext.active').forEach(tip => {
+            tip.classList.remove('active');
+        });
+    }
 
-    function toggleTooltip(element) {
-        const linha = element.closest('tr');
-        const tooltip = element.querySelector('.tooltiptext');
+    function toggleTooltip(element) {
+        const linha = element.closest('tr');
+        const tooltip = element.querySelector('.tooltiptext');
 
-        const estaAtivo = tooltip.classList.contains('active');
-        limparAtivas();
-        
-        if (!estaAtivo) {
-            tooltip.classList.add('active');
-            linha.classList.add('linha-ativa');
-        }
-    }
+        const estaAtivo = tooltip.classList.contains('active');
+        limparAtivas();
+        
+        if (!estaAtivo) {
+            tooltip.classList.add('active');
+            linha.classList.add('linha-ativa');
+        }
+    }
 
-    document.addEventListener('click', (event) => {
-        if (!event.target.closest('.observacao-tooltip')) {
-            limparAtivas();
-        }
-    });
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.observacao-tooltip')) {
+            limparAtivas();
+        }
+    });
 
-    function abrirModal(doc) {
-        documentoSelecionado = doc; 
-        
-        document.getElementById('modalLoan').value = doc['Loan Number'] || '';
-        document.getElementById('modalNome').value = doc['Nome'] || '';
-        document.getElementById('modalEstadoOriginal').value = doc['Estado'] || ''; 
-        document.getElementById('modalDataOriginal').value = doc['Data_Original'] || ''; 
-        document.getElementById('modalObservacao').value = doc['Observação'] || '';
-        
-        const campoAcao = document.getElementById('modalAcao');
-        const status = statusCorrecao[doc['Loan Number']];
+    function abrirModal(doc) {
+        documentoSelecionado = doc; 
+        
+        document.getElementById('modalLoan').value = doc['Loan Number'] || '';
+        document.getElementById('modalNome').value = doc['Nome'] || '';
+        document.getElementById('modalEstadoOriginal').value = doc['Estado'] || ''; 
+        document.getElementById('modalDataOriginal').value = doc['Data_Original'] || ''; 
+        document.getElementById('modalObservacao').value = doc['Observação'] || '';
+        
+        const campoAcao = document.getElementById('modalAcao');
+        const status = statusCorrecao[doc['Loan Number']];
 
-        // LÓGICA PRINCIPAL: Decide qual status será enviado
-        if (status && status.acaoBotao === 'Reenviar') {
-            campoAcao.value = 'Reenviado';
-        } else {
-            campoAcao.value = 'Pendente'; // O Apps Script regista 'Corrigido' para o primeiro envio.
-        }
+        // LÓGICA PRINCIPAL: Decide qual status será enviado
+        if (status && status.acaoBotao === 'Reenviar') {
+            campoAcao.value = 'Reenviado';
+        } else {
+            campoAcao.value = 'Pendente'; // O Apps Script regista 'Corrigido' para o primeiro envio.
+        }
 
-        document.getElementById('feedbackMessage').innerHTML = '';
-        document.getElementById('modalFile').value = '';
-        document.getElementById('btnSubmitForm').disabled = false;
-        
-        document.getElementById('correcaoModal').style.display = 'block';
-    }
+        document.getElementById('feedbackMessage').innerHTML = '';
+        document.getElementById('modalFile').value = '';
+        document.getElementById('btnSubmitForm').disabled = false;
+        
+        document.getElementById('correcaoModal').style.display = 'block';
+    }
 
-    function fecharModal() {
-        document.getElementById('correcaoModal').style.display = 'none';
-    }
+    function fecharModal() {
+        document.getElementById('correcaoModal').style.display = 'none';
+    }
 
-    window.onclick = function(event) {
-        const modal = document.getElementById('correcaoModal');
-        if (event.target == modal) {
-            fecharModal();
-        }
-    }
+    window.onclick = function(event) {
+        const modal = document.getElementById('correcaoModal');
+        if (event.target == modal) {
+            fecharModal();
+        }
+    }
 
-    // NOVO: Função para limpar todos os filtros
-    function limparFiltros() {
-        document.getElementById('filtroProduto').value = "";
-        document.getElementById('filtroLoanPrefixo').value = "";
-        document.getElementById('filtroEstado').value = "";
-        document.getElementById('filtroNome').value = "";
-        currentPage = 1; // Reinicia para a primeira página
-        carregarTabela(); // Recarrega a tabela com filtros vazios
-    }
+    // ===============================================
+    // FUNÇÕES DE COMUNICAÇÃO (FETCH API)
+    // ===============================================
 
-    // ===============================================
-    // FUNÇÕES DE COMUNICAÇÃO (FETCH API)
-    // ===============================================
+    async function fetchData(action, payload = {}) {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            // Usamos 'text/plain' para Apps Script para evitar o preflight CORS OPTIONS 
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+            body: JSON.stringify({ action: action, payload: payload })
+        });
 
-    async function fetchData(action, payload = {}) {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            // Usamos 'text/plain' para Apps Script para evitar o preflight CORS OPTIONS 
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
-            body: JSON.stringify({ action: action, payload: payload })
-        });
+        if (!response.ok) {
+            const errorText = await response.text();
+            try {
+                const errorJson = JSON.parse(errorText);
+                throw new Error(errorJson.message || `Erro HTTP: ${response.status} - ${response.statusText}`);
+            } catch (e) {
+                throw new Error(`Erro HTTP: ${response.status} - ${response.statusText}`);
+            }
+        }
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            try {
-                const errorJson = JSON.parse(errorText);
-                throw new Error(errorJson.message || `Erro HTTP: ${response.status} - ${response.statusText}`);
-            } catch (e) {
-                throw new Error(`Erro HTTP: ${response.status} - ${response.statusText}`);
-            }
-        }
+        const result = await response.json();
+        if (!result.success) {
+            throw new Error(result.message || 'Falha na resposta da API.');
+        }
 
-        const result = await response.json();
-        if (!result.success) {
-            throw new Error(result.message || 'Falha na resposta da API.');
-        }
+        return result.data;
+    }
+    
+    // Função de carregamento principal
+    async function carregarDocumentos() {
+        const feedback = document.getElementById('cacheFeedback');
+        feedback.textContent = 'A carregar dados...';
+        feedback.style.color = 'blue';
 
-        return result.data;
-    }
-    
-    // Função de carregamento principal
-    async function carregarDocumentos() {
-        const feedback = document.getElementById('cacheFeedback');
-        feedback.textContent = 'A carregar dados...';
-        feedback.style.color = 'blue';
+        try {
+            const data = await fetchData('getDadosCompletos');
+            
+            documentos = data.documentos;
+            statusCorrecao = data.statusCorrecao;
+            
+            carregarFiltros();
+            carregarTabela();
+            feedback.textContent = 'Dados carregados com sucesso.';
+            feedback.style.color = 'green';
+            setTimeout(() => { feedback.textContent = ''; }, 3000); 
 
-        try {
-            const data = await fetchData('getDadosCompletos');
-            
-            documentos = data.documentos;
-            statusCorrecao = data.statusCorrecao;
-            
-            carregarFiltros();
-            carregarTabela();
-            feedback.textContent = 'Dados carregados com sucesso.';
-            feedback.style.color = 'green';
-            setTimeout(() => { feedback.textContent = ''; }, 3000); 
+        } catch (err) {
+            feedback.textContent = 'ERRO ao carregar dados: ' + err.message;
+            feedback.style.color = 'red';
+            console.error('Erro na chamada da API getDadosCompletos:', err);
+        }
+    }
+    
+    // Lógica de Atualização Manual de Cache
+    document.getElementById('btnLimparCache').onclick = async () => {
+        const btn = document.getElementById('btnLimparCache');
+        const feedback = document.getElementById('cacheFeedback');
+        
+        btn.disabled = true;
+        btn.textContent = 'A limpar...';
+        feedback.textContent = '';
+        feedback.style.color = 'blue';
 
-        } catch (err) {
-            feedback.textContent = 'ERRO ao carregar dados: ' + err.message;
-            feedback.style.color = 'red';
-            console.error('Erro na chamada da API getDadosCompletos:', err);
-        }
-    }
-    
-    // Lógica de Atualização Manual de Cache
-    document.getElementById('btnLimparCache').onclick = async () => {
-        const btn = document.getElementById('btnLimparCache');
-        const feedback = document.getElementById('cacheFeedback');
-        
-        btn.disabled = true;
-        btn.textContent = 'A limpar...';
-        feedback.textContent = '';
-        feedback.style.color = 'blue';
+        try {
+            const res = await fetchData('limparCache');
+            feedback.textContent = res;
+            btn.textContent = 'Atualizar Status/Cache';
+            btn.disabled = false;
+            
+            await carregarDocumentos(); 
+            
+            setTimeout(() => { feedback.textContent = ''; }, 3000); 
+        } catch (err) {
+            feedback.textContent = 'Erro ao limpar cache: ' + err.message;
+            feedback.style.color = 'red';
+            btn.textContent = 'Atualizar Status/Cache';
+            btn.disabled = false;
+        }
+    };
 
-        try {
-            const res = await fetchData('limparCache');
-            feedback.textContent = res;
-            btn.textContent = 'Atualizar Status/Cache';
-            btn.disabled = false;
-            
-            await carregarDocumentos(); 
-            
-            setTimeout(() => { feedback.textContent = ''; }, 3000); 
-        } catch (err) {
-            feedback.textContent = 'Erro ao limpar cache: ' + err.message;
-            feedback.style.color = 'red';
-            btn.textContent = 'Atualizar Status/Cache';
-            btn.disabled = false;
-        }
-    };
+    // Submissão do Formulário de Correção (USANDO BASE64 e FETCH API)
+    document.getElementById('correcaoForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const feedback = document.getElementById('feedbackMessage');
+        const submitBtn = document.getElementById('btnSubmitForm');
+        const fileInput = document.getElementById('modalFile');
+        const file = fileInput.files[0];
 
-    // Submissão do Formulário de Correção (USANDO BASE64 e FETCH API)
-    document.getElementById('correcaoForm').onsubmit = async (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const feedback = document.getElementById('feedbackMessage');
-        const submitBtn = document.getElementById('btnSubmitForm');
-        const fileInput = document.getElementById('modalFile');
-        const file = fileInput.files[0];
+        if (!file) {
+            feedback.style.color = 'red';
+            feedback.textContent = 'Por favor, selecione um arquivo.';
+            return;
+        }
 
-        if (!file) {
-            feedback.style.color = 'red';
-            feedback.textContent = 'Por favor, selecione um arquivo.';
-            return;
-        }
+        const allowed = ['application/pdf','application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+        if(!allowed.includes(file.type)){ 
+            feedback.style.color = 'red';
+            feedback.textContent = 'Somente PDF ou Excel são permitidos.';
+            return; 
+        }
+        
+        feedback.style.color = 'blue';
+        feedback.textContent = 'Enviando arquivo... Por favor, aguarde.';
+        submitBtn.disabled = true;
 
-        const allowed = ['application/pdf','application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-        if(!allowed.includes(file.type)){ 
-            feedback.style.color = 'red';
-            feedback.textContent = 'Somente PDF ou Excel são permitidos.';
-            return; 
-        }
-        
-        feedback.style.color = 'blue';
-        feedback.textContent = 'Enviando arquivo... Por favor, aguarde.';
-        submitBtn.disabled = true;
+        const reader = new FileReader();
+        reader.onload = async e => {
+            const base64 = e.target.result.split(',')[1];
+            
+            const payload = { 
+                loan: form.loan.value, 
+                nome: form.nome.value,
+                estadoOriginal: form.estadoOriginal.value,
+                dataOriginal: form.dataOriginal.value,
+                observacao: form.observacao.value,
+                acao: form.acao.value, // 'Corrigido' ou 'Reenviado'
+                fileName: file.name, 
+                mimeType: file.type, 
+                fileData: base64
+            };
 
-        const reader = new FileReader();
-        reader.onload = async e => {
-            const base64 = e.target.result.split(',')[1];
-            
-            const payload = { 
-                loan: form.loan.value, 
-                nome: form.nome.value,
-                estadoOriginal: form.estadoOriginal.value,
-                dataOriginal: form.dataOriginal.value,
-                observacao: form.observacao.value,
-                acao: form.acao.value, // 'Corrigido' ou 'Reenviado'
-                fileName: file.name, 
-                mimeType: file.type, 
-                fileData: base64
-            };
+            try {
+                const res = await fetchData('processarCorrecao', payload);
 
-            try {
-                const res = await fetchData('processarCorrecao', payload);
+                feedback.style.color = 'green';
+                feedback.textContent = res.message;
+                
+                setTimeout(() => {
+                    fecharModal();
+                    carregarDocumentos(); 
+                }, 1500); 
 
-                feedback.style.color = 'green';
-                feedback.textContent = res.message;
-                
-                setTimeout(() => {
-                    fecharModal();
-                    carregarDocumentos(); 
-                }, 1500); 
-
-            } catch (err) {
-                feedback.style.color = 'red';
-                feedback.textContent = 'ERRO: ' + err.message;
-                submitBtn.disabled = false;
-            }
-        };
-        reader.readAsDataURL(file);
-    };
+            } catch (err) {
+                feedback.style.color = 'red';
+                feedback.textContent = 'ERRO: ' + err.message;
+                submitBtn.disabled = false;
+            }
+        };
+        reader.readAsDataURL(file);
+    };
 
 
-    // ===============================================
-    // FUNÇÕES DA TABELA E FILTROS
-    // ===============================================
+    // ===============================================
+    // FUNÇÕES DA TABELA E FILTROS
+    // ===============================================
 
-    function carregarTabela(){
-        const tbody = document.querySelector('#tabela tbody');
-        tbody.innerHTML = '';
+    function carregarTabela(){
+        const tbody = document.querySelector('#tabela tbody');
+        tbody.innerHTML = '';
 
-        const filtroProd = document.getElementById('filtroProduto').value;
-        const filtroLoanPfx = document.getElementById('filtroLoanPrefixo').value;
-        const filtroEst = document.getElementById('filtroEstado').value;
-        const buscaNome = document.getElementById('filtroNome').value.toLowerCase(); 
+        const filtroProd = document.getElementById('filtroProduto').value;
+        const filtroLoanPfx = document.getElementById('filtroLoanPrefixo').value;
+        const filtroEst = document.getElementById('filtroEstado').value;
+        const buscaNome = document.getElementById('filtroNome').value.toLowerCase(); 
 
-        const filtrados = documentos.filter(doc => {
-            const docLoanPrefix = getLoanPrefix(doc['Loan Number']);
-            const docNome = doc['Nome'].toLowerCase();
-            
-            return (
-                (!filtroProd || doc['Produto'] === filtroProd) &&
-                (!filtroLoanPfx || docLoanPrefix === filtroLoanPfx) &&
-                (!filtroEst || doc['Estado'] === filtroEst) &&
-                (!buscaNome || docNome.includes(buscaNome))
-            );
-        });
-        
-        const totalPages = Math.ceil(filtrados.length / rowsPerPage);
-        if(currentPage > totalPages) currentPage = totalPages || 1;
+        const filtrados = documentos.filter(doc => {
+            const docLoanPrefix = getLoanPrefix(doc['Loan Number']);
+            const docNome = doc['Nome'].toLowerCase();
+            
+            return (
+                (!filtroProd || doc['Produto'] === filtroProd) &&
+                (!filtroLoanPfx || docLoanPrefix === filtroLoanPfx) &&
+                (!filtroEst || doc['Estado'] === filtroEst) &&
+                (!buscaNome || docNome.includes(buscaNome))
+            );
+        });
+        
+        const totalPages = Math.ceil(filtrados.length / rowsPerPage);
+        if(currentPage > totalPages) currentPage = totalPages || 1;
 
-        const start = (currentPage - 1) * rowsPerPage;
-        const end = start + rowsPerPage;
-        const paginated = filtrados.slice(start, end);
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const paginated = filtrados.slice(start, end);
 
-        paginated.forEach(doc => {
-            const obsContent = doc['Observação'] || ''; 
-            const safeObsContent = escapeHtml(obsContent.trim());
-            
-            const obsHtml = safeObsContent ? 
-                `<span class="observacao-tooltip" onclick="event.stopPropagation(); toggleTooltip(this)">
-                    ... 
-                    <span class="tooltiptext">${safeObsContent}</span>
-                </span>` 
-                : '';
-                
-            const loan = doc['Loan Number'];
-            const status = statusCorrecao[loan]; 
-            
-            let acaoBotao = 'Enviar/PDF'; 
-            let styleClass = ''; 
-            let disabled = '';
-            
-            if (status && status.statusAprovacao && status.statusAprovacao.toLowerCase() === 'fechado') {
-                acaoBotao = 'Fechado';
-                styleClass = 'btn-fechado'; 
-                disabled = 'disabled'; 
-            } else if (status && status.acaoBotao === 'Reenviar') {
-                acaoBotao = 'Reenviar';
-                styleClass = 'btn-reenviar'; 
-            }
-            
-            const acaoBtn = `<button class="btn ${styleClass}" onclick='${disabled ? "void(0)" : `abrirModal(${JSON.stringify(doc)})`}' ${disabled}>${acaoBotao}</button>`;
+        paginated.forEach(doc => {
+            const obsContent = doc['Observação'] || ''; 
+            const safeObsContent = escapeHtml(obsContent.trim());
+            
+            const obsHtml = safeObsContent ? 
+                `<span class="observacao-tooltip" onclick="event.stopPropagation(); toggleTooltip(this)">
+                    ... 
+                    <span class="tooltiptext">${safeObsContent}</span>
+                </span>` 
+                : '';
+                
+            const loan = doc['Loan Number'];
+            const status = statusCorrecao[loan]; 
+            
+            let acaoBotao = 'Enviar/PDF'; 
+            let styleClass = ''; 
+            let disabled = '';
+            
+            if (status && status.statusAprovacao && status.statusAprovacao.toLowerCase() === 'fechado') {
+                acaoBotao = 'Fechado';
+                styleClass = 'btn-fechado'; 
+                disabled = 'disabled'; 
+            } else if (status && status.acaoBotao === 'Reenviar') {
+                acaoBotao = 'Reenviar';
+                styleClass = 'btn-reenviar'; 
+            }
+            
+            const acaoBtn = `<button class="btn ${styleClass}" onclick='${disabled ? "void(0)" : `abrirModal(${JSON.stringify(doc)})`}' ${disabled}>${acaoBotao}</button>`;
 
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${doc['Loan Number']}</td>
-                <td>${doc['Produto']}</td>
-                <td>${doc['Nome']}</td>
-                <td>${doc['Estado']}</td>
-                <td>${formatarData(doc['Data'])}</td>
-                <td>${obsHtml}</td>
-                <td>${acaoBtn}</td> 
-            `;
-            tbody.appendChild(tr);
-        });
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${doc['Loan Number']}</td>
+                <td>${doc['Produto']}</td>
+                <td>${doc['Nome']}</td>
+                <td>${doc['Estado']}</td>
+                <td>${formatarData(doc['Data'])}</td>
+                <td>${obsHtml}</td>
+                <td>${acaoBtn}</td> 
+            `;
+            tbody.appendChild(tr);
+        });
 
-        document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages || 1}`;
-        document.getElementById('prevPage').disabled = currentPage <= 1;
-        document.getElementById('nextPage').disabled = currentPage >= totalPages;
-    }
+        document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages || 1}`;
+        document.getElementById('prevPage').disabled = currentPage <= 1;
+        document.getElementById('nextPage').disabled = currentPage >= totalPages;
+    }
 
-    // Paginação
-    document.getElementById('prevPage').onclick = () => { if(currentPage>1){currentPage--; carregarTabela(); } };
-    document.getElementById('nextPage').onclick = () => { currentPage++; carregarTabela(); };
+    // Paginação
+    document.getElementById('prevPage').onclick = () => { if(currentPage>1){currentPage--; carregarTabela(); } };
+    document.getElementById('nextPage').onclick = () => { currentPage++; carregarTabela(); };
 
-    // Popular filtros
-    function carregarFiltros(){
-        const prodSet = new Set();
-        const loanPfxSet = new Set();
-        
-        documentos.forEach(d=>{
-            if(d['Produto']) prodSet.add(d['Produto']);
-            const prefixo = getLoanPrefix(d['Loan Number']);
-            if(prefixo) loanPfxSet.add(prefixo);
-        });
+    // Popular filtros
+    function carregarFiltros(){
+        const prodSet = new Set();
+        const loanPfxSet = new Set();
+        
+        documentos.forEach(d=>{
+            if(d['Produto']) prodSet.add(d['Produto']);
+            const prefixo = getLoanPrefix(d['Loan Number']);
+            if(prefixo) loanPfxSet.add(prefixo);
+        });
 
-        const selProd = document.getElementById('filtroProduto');
-        selProd.innerHTML = '<option value="">Todos</option>'; 
-        Array.from(prodSet).sort().forEach(v => selProd.innerHTML += `<option value="${v}">${v}</option>`);
+        const selProd = document.getElementById('filtroProduto');
+        selProd.innerHTML = '<option value="">Todos</option>'; 
+        Array.from(prodSet).sort().forEach(v => selProd.innerHTML += `<option value="${v}">${v}</option>`);
 
-        const selLoanPfx = document.getElementById('filtroLoanPrefixo');
-        selLoanPfx.innerHTML = '<option value="">Todos</option>'; 
-        Array.from(loanPfxSet).sort().forEach(v => selLoanPfx.innerHTML += `<option value="${v}">${v}</option>`);
+        const selLoanPfx = document.getElementById('filtroLoanPrefixo');
+        selLoanPfx.innerHTML = '<option value="">Todos</option>'; 
+        Array.from(loanPfxSet).sort().forEach(v => selLoanPfx.innerHTML += `<option value="${v}">${v}</option>`);
 
-        // O filtro de estado usa apenas os estados definidos no Apps Script.
-        const selEstado = document.getElementById('filtroEstado');
-        selEstado.innerHTML = '<option value="">Todos</option>'; 
-        ESTADOS_PERMITIDOS.forEach(v => selEstado.innerHTML += `<option value="${v}">${v}</option>`);
-    }
+        // O filtro de estado usa apenas os estados definidos no Apps Script.
+        const selEstado = document.getElementById('filtroEstado');
+        selEstado.innerHTML = '<option value="">Todos</option>'; 
+        ESTADOS_PERMITIDOS.forEach(v => selEstado.innerHTML += `<option value="${v}">${v}</option>`);
+        
+        // Mantém a lógica de atribuição de eventos de filtro (já existente)
+        document.getElementById('filtroProduto').onchange = () => { currentPage=1; carregarTabela(); };
+        document.getElementById('filtroLoanPrefixo').onchange = () => { currentPage=1; carregarTabela(); };
+        document.getElementById('filtroEstado').onchange = () => { currentPage=1; carregarTabela(); };
+        document.getElementById('filtroNome').oninput = () => { currentPage=1; carregarTabela(); };
+        
+        // NOVO: Adiciona a função de limpeza de filtro
+        document.getElementById('btnLimparFiltro').onclick = limparFiltros;
+    }
+    
+    // NOVO: Função para limpar os filtros
+    function limparFiltros() {
+        document.getElementById('filtroProduto').value = '';
+        document.getElementById('filtroLoanPrefixo').value = '';
+        document.getElementById('filtroEstado').value = '';
+        document.getElementById('filtroNome').value = '';
+        currentPage = 1;
+        carregarTabela(); // Recarrega a tabela com os filtros limpos
+    }
 
-    // Filtros onchange
-    document.getElementById('filtroProduto').onchange = () => { currentPage=1; carregarTabela(); };
-    document.getElementById('filtroLoanPrefixo').onchange = () => { currentPage=1; carregarTabela(); };
-    document.getElementById('filtroEstado').onchange = () => { currentPage=1; carregarTabela(); };
-    document.getElementById('filtroNome').oninput = () => { currentPage=1; carregarTabela(); }; 
-    
-    // NOVO: Evento para o botão de limpar filtros
-    document.getElementById('btnLimparFiltros').onclick = limparFiltros;
 
-
-    // Carregar dados ao iniciar
-    document.addEventListener('DOMContentLoaded', ()=>{
-        carregarDocumentos();
-    });
+    // Carregar dados ao iniciar
+    document.addEventListener('DOMContentLoaded', ()=>{
+        carregarDocumentos();
+    });
 </script>
 </body>
 
