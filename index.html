@@ -216,6 +216,12 @@
         /* Cores dos Botões no Layout Original */
         .btn-reenviar { background: #ff9800 !important; }
         .btn-fechado { background: #f44336 !important; cursor: not-allowed; }
+
+        /* NOVO ESTILO: Cor de fundo para o status 'Refazer correção' */
+        .refazer-correcao-linha {
+            background-color: #fce4e4 !important; /* Vermelho muito suave */
+            /* font-weight: bold; - Opcional, descomente se quiser o texto mais negrito */
+        }
     </style>
 </head>
 <body>
@@ -608,7 +614,14 @@
             
             const acaoBtn = `<button class="btn ${styleClass}" onclick='${disabled ? "void(0)" : `abrirModal(${JSON.stringify(doc)})`}' ${disabled}>${acaoBotao}</button>`;
 
+            // Lógica para adicionar a classe de cor de fundo (Refazer correção)
+            let linhaClass = '';
+            if (doc['Estado'] === 'Refazer correção') {
+                linhaClass = 'refazer-correcao-linha';
+            }
+
             const tr = document.createElement('tr');
+            tr.className = linhaClass; // Aplica a classe à linha
             tr.innerHTML = `
                 <td>${doc['Loan Number']}</td>
                 <td>${doc['Produto']}</td>
@@ -652,7 +665,10 @@
         // O filtro de estado usa apenas os estados definidos no Apps Script.
         const selEstado = document.getElementById('filtroEstado');
         selEstado.innerHTML = '<option value="">Todos</option>'; 
-        ESTADOS_PERMITIDOS.forEach(v => selEstado.innerHTML += `<option value="${v}">${v}</option>`);
+        // Adicionando 'Refazer correção' se não estiver na lista ESTADOS_PERMITIDOS, mas para a lógica de filtro funcionar:
+        const estados = [...new Set([...ESTADOS_PERMITIDOS, 'Refazer correção'])].sort();
+        estados.forEach(v => selEstado.innerHTML += `<option value="${v}">${v}</option>`);
+        
         
         // Mantém a lógica de atribuição de eventos de filtro (já existente)
         document.getElementById('filtroProduto').onchange = () => { currentPage=1; carregarTabela(); };
